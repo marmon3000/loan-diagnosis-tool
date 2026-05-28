@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>融資診断 | はてなベース株式会社</title>
+  <meta name="description" content="日本政策金融公庫や民間金融機関からの融資可能性を無料で簡単診断。20の質問に答えるだけで、融資可能性と推定融資可能額がわかります。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #2a5772;
+      --primary-dark: #1e4259;
+      --accent: #1F61AB;
+      --bg: #FFFFFF;
+      --bg-light: #F5F7FA;
+      --bg-warm: #F8F6F3;
+      --text: #0E0E14;
+      --text-sub: #5A5A6E;
+      --border: #D8DDE4;
+      --success: #2E8B57;
+      --warning: #D4880F;
+      --danger: #C0392B;
+      --font: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+      --radius: 8px;
+      --radius-lg: 16px;
+      --shadow: 0 2px 12px rgba(42,87,114,0.08);
+      --shadow-lg: 0 8px 32px rgba(42,87,114,0.12);
+      --transition: 0.3s ease;
+    }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .logo span {
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--text-sub);
+      display: block;
+      margin-top: 2px;
+    }
+    .header-cta {
+      font-size: 13px;
+      color: var(--primary);
+      text-decoration: none;
+      border: 1px solid var(--primary);
+      padding: 8px 20px;
+      border-radius: var(--radius);
+      transition: var(--transition);
+    }
+    .header-cta:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 56px 24px 48px;
+    }
+    .hero-label {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 100px;
+      padding: 4px 16px;
+      margin-bottom: 20px;
+      letter-spacing: 0.08em;
+    }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 15px;
+      opacity: 0.85;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* ===== Container ===== */
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== Category Nav ===== */
+    .category-nav {
+      padding: 32px 0 0;
+    }
+    .category-list {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+    .category-item {
+      flex: 1;
+      text-align: center;
+      padding: 12px 4px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-sub);
+      background: var(--bg-light);
+      border-radius: var(--radius) var(--radius) 0 0;
+      position: relative;
+      transition: var(--transition);
+      cursor: default;
+    }
+    .category-item .cat-num {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--border);
+      margin-bottom: 2px;
+      transition: var(--transition);
+    }
+    .category-item.active {
+      background: var(--primary);
+      color: #fff;
+    }
+    .category-item.active .cat-num {
+      color: rgba(255,255,255,0.6);
+    }
+    .category-item.done {
+      background: rgba(42,87,114,0.08);
+      color: var(--primary);
+    }
+    .category-item.done .cat-num {
+      color: var(--primary);
+    }
+
+    /* ===== Progress ===== */
+    .progress-section { padding: 20px 0 0; }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .progress-label { font-size: 13px; color: var(--text-sub); }
+    .progress-count { font-size: 13px; font-weight: 700; color: var(--primary); }
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 100px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+
+    /* ===== Step Card ===== */
+    .step-area { padding: 28px 0 48px; min-height: 380px; }
+    .step-card { display: none; animation: fadeIn 0.35s ease; }
+    .step-card.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step-number {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .step-question {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+    .step-supplement {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    /* ===== Radio Options ===== */
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 16px 18px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--text);
+      transition: var(--transition);
+      line-height: 1.5;
+    }
+    .option-btn:hover { border-color: var(--primary); background: rgba(42,87,114,0.02); }
+    .option-btn.selected { border-color: var(--primary); background: rgba(42,87,114,0.06); }
+    .option-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      position: relative;
+      transition: var(--transition);
+    }
+    .option-btn.selected .option-icon {
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+    .option-btn.selected .option-icon::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    /* ===== Select ===== */
+    .select-wrap { margin-bottom: 8px; }
+    .select-wrap select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235A5A6E' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .select-wrap select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* ===== Navigation ===== */
+    .nav-buttons { display: flex; gap: 12px; margin-top: 32px; }
+    .btn {
+      padding: 13px 28px;
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+    .btn-back {
+      background: transparent;
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+    }
+    .btn-back:hover { background: var(--bg-light); }
+    .btn-next { background: var(--primary); color: #fff; flex: 1; }
+    .btn-next:hover { background: var(--primary-dark); }
+    .btn-next:disabled { background: var(--border); cursor: not-allowed; }
+
+    /* ===== Result ===== */
+    .result-section {
+      display: none;
+      padding: 40px 0 64px;
+      animation: fadeIn 0.5s ease;
+    }
+    .result-section.active { display: block; }
+
+    .result-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .result-badge {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 20px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+    .result-badge.high { background: rgba(46,139,87,0.1); color: var(--success); }
+    .result-badge.medium { background: rgba(212,136,15,0.1); color: var(--warning); }
+    .result-badge.low { background: rgba(192,57,43,0.1); color: var(--danger); }
+
+    .result-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; line-height: 1.5; }
+    .result-description { font-size: 14px; color: var(--text-sub); margin-bottom: 32px; line-height: 1.8; }
+
+    .gauge-wrapper { margin: 0 auto 32px; width: 200px; height: 120px; position: relative; }
+    .gauge-bg { fill: none; stroke: var(--border); stroke-width: 14; }
+    .gauge-fill { fill: none; stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset 1.2s ease, stroke 0.5s ease; }
+    .gauge-text { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); text-align: center; }
+    .gauge-score { font-size: 36px; font-weight: 700; color: var(--primary); line-height: 1; }
+    .gauge-unit { font-size: 14px; color: var(--text-sub); }
+
+    .result-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .result-detail-item {
+      background: var(--bg-light);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .result-detail-label { font-size: 12px; color: var(--text-sub); margin-bottom: 4px; font-weight: 500; }
+    .result-detail-value { font-size: 17px; font-weight: 700; color: var(--primary); }
+    .result-detail-value small { font-size: 12px; font-weight: 400; color: var(--text-sub); }
+
+    /* Category Scores */
+    .result-category-scores { margin-bottom: 28px; text-align: left; }
+    .result-category-scores h3 {
+      font-size: 15px; font-weight: 700; margin-bottom: 16px; color: var(--text);
+    }
+    .cat-score-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .cat-score-label { font-size: 13px; width: 120px; flex-shrink: 0; color: var(--text-sub); }
+    .cat-score-bar-bg {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .cat-score-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 1s ease;
+      width: 0%;
+    }
+    .cat-score-value { font-size: 13px; font-weight: 700; width: 36px; text-align: right; color: var(--primary); }
+
+    /* Advice */
+    .result-advice {
+      background: var(--bg-light);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .result-advice h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--primary); }
+    .result-advice ul { list-style: none; padding: 0; }
+    .result-advice li {
+      font-size: 13px;
+      line-height: 1.8;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .result-advice li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 9px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Lead Form */
+    .lead-form {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      text-align: left;
+    }
+    .lead-form h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; text-align: center; }
+    .lead-form .lead-desc { font-size: 13px; color: var(--text-sub); margin-bottom: 20px; text-align: center; line-height: 1.7; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .form-group label .required {
+      font-size: 11px;
+      color: var(--danger);
+      margin-left: 4px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      transition: var(--transition);
+    }
+    .form-group input:focus { outline: none; border-color: var(--primary); }
+    .form-group input::placeholder { color: #bbb; }
+
+    .btn-cta {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: #fff;
+      padding: 16px;
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      margin-top: 24px;
+    }
+    .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+    .cta-note { font-size: 12px; color: var(--text-sub); margin-top: 10px; text-align: center; }
+
+    .btn-retry {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-sub);
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 13px;
+    }
+    .footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
+
+    /* ===== Trust ===== */
+    .trust-section { padding: 36px 0; border-top: 1px solid var(--border); }
+    .trust-items { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .trust-item { text-align: center; }
+    .trust-number { font-size: 28px; font-weight: 700; color: var(--primary); }
+    .trust-label { font-size: 13px; color: var(--text-sub); margin-top: 4px; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .hero { padding: 40px 20px 32px; }
+      .hero h1 { font-size: 22px; }
+      .step-question { font-size: 16px; }
+      .category-item { font-size: 10px; padding: 10px 2px; }
+      .category-item .cat-num { font-size: 10px; }
+      .result-details { grid-template-columns: 1fr; }
+      .result-card { padding: 28px 18px; }
+      .trust-items { gap: 28px; }
+      .cat-score-label { width: 90px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="https://hatenabase.jp/" class="logo">
+        はてなベース株式会社
+        <span>融資診断サービス</span>
+      </a>
+      <a href="https://hatenabase.jp/contact/" class="header-cta">無料相談はこちら</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-label">無料 / 約2〜3分で完了</div>
+      <h1>あなたの融資可能性を<br>今すぐ診断</h1>
+      <p>日本政策金融公庫をはじめとする金融機関からの融資可能性を、20の質問で診断します。</p>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <div class="container">
+
+    <!-- Category Nav -->
+    <nav class="category-nav" id="categoryNav">
+      <ul class="category-list">
+        <li class="category-item active" data-cat="1"><span class="cat-num">1</span>前提情報</li>
+        <li class="category-item" data-cat="2"><span class="cat-num">2</span>既存借入</li>
+        <li class="category-item" data-cat="3"><span class="cat-num">3</span>経験・信用</li>
+        <li class="category-item" data-cat="4"><span class="cat-num">4</span>自己資金</li>
+        <li class="category-item" data-cat="5"><span class="cat-num">5</span>事業計画</li>
+      </ul>
+    </nav>
+
+    <!-- Progress -->
+    <div class="progress-section" id="progressSection">
+      <div class="progress-header">
+        <span class="progress-label" id="progressLabel">STEP 1 / 前提情報</span>
+        <span class="progress-count" id="progressCount">1 / 20</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <!-- Steps -->
+    <div class="step-area" id="stepArea">
+
+      <!-- ===== STEP 1: 前提情報 (Q1-Q5) ===== -->
+      <div class="step-card active" data-step="1" data-cat="1">
+        <div class="step-number">QUESTION 01</div>
+        <h2 class="step-question">法人か個人事業主かをご選択ください。</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="corp" data-score="3"><span class="option-icon"></span>法人</button>
+          <button class="option-btn" data-value="sole" data-score="3"><span class="option-icon"></span>個人事業主</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="2" data-cat="1">
+        <div class="step-number">QUESTION 02</div>
+        <h2 class="step-question">事業（予定）地の都道府県をご選択ください。</h2>
+        <p class="step-supplement">法人は本店所在地、個人事業主は事業所所在地をお選びください。</p>
+        <div class="select-wrap">
+          <select id="prefSelect" data-score-type="fixed" data-score="3">
+            <option value="">選択してください</option>
+            <option value="北海道">北海道</option><option value="青森県">青森県</option><option value="岩手県">岩手県</option>
+            <option value="宮城県">宮城県</option><option value="秋田県">秋田県</option><option value="山形県">山形県</option>
+            <option value="福島県">福島県</option><option value="茨城県">茨城県</option><option value="栃木県">栃木県</option>
+            <option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option><option value="千葉県">千葉県</option>
+            <option value="東京都">東京都</option><option value="神奈川県">神奈川県</option><option value="新潟県">新潟県</option>
+            <option value="富山県">富山県</option><option value="石川県">石川県</option><option value="福井県">福井県</option>
+            <option value="山梨県">山梨県</option><option value="長野県">長野県</option><option value="岐阜県">岐阜県</option>
+            <option value="静岡県">静岡県</option><option value="愛知県">愛知県</option><option value="三重県">三重県</option>
+            <option value="滋賀県">滋賀県</option><option value="京都府">京都府</option><option value="大阪府">大阪府</option>
+            <option value="兵庫県">兵庫県</option><option value="奈良県">奈良県</option><option value="和歌山県">和歌山県</option>
+            <option value="鳥取県">鳥取県</option><option value="島根県">島根県</option><option value="岡山県">岡山県</option>
+            <option value="広島県">広島県</option><option value="山口県">山口県</option><option value="徳島県">徳島県</option>
+            <option value="香川県">香川県</option><option value="愛媛県">愛媛県</option><option value="高知県">高知県</option>
+            <option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option><option value="長崎県">長崎県</option>
+            <option value="熊本県">熊本県</option><option value="大分県">大分県</option><option value="宮崎県">宮崎県</option>
+            <option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option>
+            <option value="海外">海外</option><option value="未定">未定</option>
+          </select>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="3" data-cat="1">
+        <div class="step-number">QUESTION 03</div>
+        <h2 class="step-question">現在の起業のご状況をご選択ください。</h2>
+        <p class="step-supplement">創業2期目以内の方を対象としています。3期目以降の方もまずは診断をお試しください。</p>
+        <div class="options">
+          <button class="option-btn" data-value="future" data-score="2"><span class="option-icon"></span>これから起業する（時期未定）</button>
+          <button class="option-btn" data-value="1year" data-score="3"><span class="option-icon"></span>1年以内に起業する</button>
+          <button class="option-btn" data-value="sole_started" data-score="3"><span class="option-icon"></span>すでに個人事業主として起業している</button>
+          <button class="option-btn" data-value="corp_1st" data-score="4"><span class="option-icon"></span>法人を設立して1期目の途中</button>
+          <button class="option-btn" data-value="2nd" data-score="4"><span class="option-icon"></span>1回決算を終え、2期目の途中</button>
+          <button class="option-btn" data-value="3rd_plus" data-score="5"><span class="option-icon"></span>3期目以降</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="4" data-cat="1">
+        <div class="step-number">QUESTION 04</div>
+        <h2 class="step-question">業種をご選択ください。</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="it" data-score="3"><span class="option-icon"></span>情報通信業（IT）</button>
+          <button class="option-btn" data-value="service" data-score="3"><span class="option-icon"></span>サービス業</button>
+          <button class="option-btn" data-value="food" data-score="3"><span class="option-icon"></span>飲食業</button>
+          <button class="option-btn" data-value="retail" data-score="3"><span class="option-icon"></span>小売業</button>
+          <button class="option-btn" data-value="construction" data-score="3"><span class="option-icon"></span>建設業</button>
+          <button class="option-btn" data-value="medical" data-score="3"><span class="option-icon"></span>医療・福祉</button>
+          <button class="option-btn" data-value="other" data-score="3"><span class="option-icon"></span>その他</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="5" data-cat="1">
+        <div class="step-number">QUESTION 05</div>
+        <h2 class="step-question">創業融資での調達希望金額をご選択ください。</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="100-300" data-score="5"><span class="option-icon"></span>100〜300万円</button>
+          <button class="option-btn" data-value="300-500" data-score="4"><span class="option-icon"></span>300〜500万円</button>
+          <button class="option-btn" data-value="500-800" data-score="3"><span class="option-icon"></span>500〜800万円</button>
+          <button class="option-btn" data-value="800-1000" data-score="3"><span class="option-icon"></span>800〜1,000万円</button>
+          <button class="option-btn" data-value="1000-1500" data-score="2"><span class="option-icon"></span>1,000〜1,500万円</button>
+          <button class="option-btn" data-value="1500-2000" data-score="2"><span class="option-icon"></span>1,500〜2,000万円</button>
+          <button class="option-btn" data-value="2000plus" data-score="1"><span class="option-icon"></span>2,000万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 2: 既存借入 (Q6-Q7) ===== -->
+      <div class="step-card" data-step="6" data-cat="2">
+        <div class="step-number">QUESTION 06</div>
+        <h2 class="step-question">現在、事業に関する借入はありますか？</h2>
+        <p class="step-supplement">複数ある場合は、最も金額の大きいものをお選びください。</p>
+        <div class="options">
+          <button class="option-btn" data-value="none" data-score="4"><span class="option-icon"></span>なし</button>
+          <button class="option-btn" data-value="jfc" data-score="3"><span class="option-icon"></span>日本政策金融公庫</button>
+          <button class="option-btn" data-value="bank_guarantee" data-score="3"><span class="option-icon"></span>民間金融機関（保証協会付き）</button>
+          <button class="option-btn" data-value="bank_proper" data-score="3"><span class="option-icon"></span>民間金融機関（プロパー）</button>
+          <button class="option-btn" data-value="personal" data-score="2"><span class="option-icon"></span>家族・知人から</button>
+          <button class="option-btn" data-value="other_loan" data-score="2"><span class="option-icon"></span>その他</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="7" data-cat="2">
+        <div class="step-number">QUESTION 07</div>
+        <h2 class="step-question">過去に融資を申し込んで否決された経験はありますか？</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="no" data-score="5"><span class="option-icon"></span>なし</button>
+          <button class="option-btn" data-value="once" data-score="2"><span class="option-icon"></span>1回ある</button>
+          <button class="option-btn" data-value="twice_plus" data-score="1"><span class="option-icon"></span>2回以上ある</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 3: 代表者の経験・信用情報 (Q8-Q13) ===== -->
+      <div class="step-card" data-step="8" data-cat="3">
+        <div class="step-number">QUESTION 08</div>
+        <h2 class="step-question">起業する事業と、これまでの職歴との関連性はありますか？</h2>
+        <p class="step-supplement">既に起業されている場合は、起業済みの事業と起業前の職歴との関連性についてお答えください。</p>
+        <div class="options">
+          <button class="option-btn" data-value="none" data-score="1"><span class="option-icon"></span>まったく関係のない領域</button>
+          <button class="option-btn" data-value="related" data-score="3"><span class="option-icon"></span>関連のある領域</button>
+          <button class="option-btn" data-value="same" data-score="5"><span class="option-icon"></span>同じ事業</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="9" data-cat="3">
+        <div class="step-number">QUESTION 09</div>
+        <h2 class="step-question">関連する職歴の経験年数をご選択ください。</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="under1" data-score="1"><span class="option-icon"></span>1年未満</button>
+          <button class="option-btn" data-value="1-3" data-score="2"><span class="option-icon"></span>1〜3年</button>
+          <button class="option-btn" data-value="3-5" data-score="3"><span class="option-icon"></span>3〜5年</button>
+          <button class="option-btn" data-value="5-7" data-score="4"><span class="option-icon"></span>5〜7年</button>
+          <button class="option-btn" data-value="7plus" data-score="5"><span class="option-icon"></span>7年以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="10" data-cat="3">
+        <div class="step-number">QUESTION 10</div>
+        <h2 class="step-question">代表者個人のおよその年収をご選択ください。</h2>
+        <p class="step-supplement">融資申込前年の年収（源泉徴収票・確定申告書ベース）でお答えください。</p>
+        <div class="options">
+          <button class="option-btn" data-value="under100" data-score="1"><span class="option-icon"></span>100万円未満</button>
+          <button class="option-btn" data-value="100-300" data-score="2"><span class="option-icon"></span>100〜300万円</button>
+          <button class="option-btn" data-value="300-500" data-score="3"><span class="option-icon"></span>300〜500万円</button>
+          <button class="option-btn" data-value="500-1000" data-score="4"><span class="option-icon"></span>500〜1,000万円</button>
+          <button class="option-btn" data-value="1000plus" data-score="5"><span class="option-icon"></span>1,000万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="11" data-cat="3">
+        <div class="step-number">QUESTION 11</div>
+        <h2 class="step-question">個人的な借入（住宅ローン・カーローン除く）の残高は？</h2>
+        <p class="step-supplement">消費者金融・カードローン・キャッシングなどが該当します。</p>
+        <div class="options">
+          <button class="option-btn" data-value="none" data-score="5"><span class="option-icon"></span>なし</button>
+          <button class="option-btn" data-value="under50" data-score="3"><span class="option-icon"></span>50万円未満</button>
+          <button class="option-btn" data-value="50-100" data-score="2"><span class="option-icon"></span>50〜100万円</button>
+          <button class="option-btn" data-value="100plus" data-score="1"><span class="option-icon"></span>100万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="12" data-cat="3">
+        <div class="step-number">QUESTION 12</div>
+        <h2 class="step-question">借入やクレジットカードの返済状況は？</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="clean" data-score="5"><span class="option-icon"></span>遅延なし</button>
+          <button class="option-btn" data-value="minor" data-score="3"><span class="option-icon"></span>過去に何度か遅れたことがある</button>
+          <button class="option-btn" data-value="major" data-score="1"><span class="option-icon"></span>3ヶ月以上の遅延がある</button>
+          <button class="option-btn" data-value="saimu" data-score="0"><span class="option-icon"></span>債務整理・自己破産の経験がある</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="13" data-cat="3">
+        <div class="step-number">QUESTION 13</div>
+        <h2 class="step-question">税金（住民税等）の未納はありますか？</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="no" data-score="5"><span class="option-icon"></span>未納なし</button>
+          <button class="option-btn" data-value="yes" data-score="0"><span class="option-icon"></span>未納がある</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 4: 自己資金 (Q14-Q16) ===== -->
+      <div class="step-card" data-step="14" data-cat="4">
+        <div class="step-number">QUESTION 14</div>
+        <h2 class="step-question">資本金の額をご選択ください。</h2>
+        <p class="step-supplement">個人事業主の場合は、事業のために準備してきた資金の合計をお選びください。</p>
+        <div class="options">
+          <button class="option-btn" data-value="under100" data-score="1"><span class="option-icon"></span>100万円未満</button>
+          <button class="option-btn" data-value="100-300" data-score="2"><span class="option-icon"></span>100〜300万円</button>
+          <button class="option-btn" data-value="300-500" data-score="3"><span class="option-icon"></span>300〜500万円</button>
+          <button class="option-btn" data-value="500-1000" data-score="4"><span class="option-icon"></span>500〜1,000万円</button>
+          <button class="option-btn" data-value="1000plus" data-score="5"><span class="option-icon"></span>1,000万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="15" data-cat="4">
+        <div class="step-number">QUESTION 15</div>
+        <h2 class="step-question">現時点の事業用口座の預金残高をご選択ください。</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="under100" data-score="1"><span class="option-icon"></span>100万円未満</button>
+          <button class="option-btn" data-value="100-300" data-score="2"><span class="option-icon"></span>100〜300万円</button>
+          <button class="option-btn" data-value="300-500" data-score="3"><span class="option-icon"></span>300〜500万円</button>
+          <button class="option-btn" data-value="500-1000" data-score="4"><span class="option-icon"></span>500〜1,000万円</button>
+          <button class="option-btn" data-value="1000plus" data-score="5"><span class="option-icon"></span>1,000万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="16" data-cat="4">
+        <div class="step-number">QUESTION 16</div>
+        <h2 class="step-question">上記とは別に保有する個人資産（定期預金・投資信託等）は？</h2>
+        <p class="step-supplement">事業に使うか否かに関わらず、融資審査でプラスに作用する場合があります。</p>
+        <div class="options">
+          <button class="option-btn" data-value="under100" data-score="1"><span class="option-icon"></span>100万円未満</button>
+          <button class="option-btn" data-value="100-300" data-score="2"><span class="option-icon"></span>100〜300万円</button>
+          <button class="option-btn" data-value="300-500" data-score="3"><span class="option-icon"></span>300〜500万円</button>
+          <button class="option-btn" data-value="500-1000" data-score="4"><span class="option-icon"></span>500〜1,000万円</button>
+          <button class="option-btn" data-value="1000plus" data-score="5"><span class="option-icon"></span>1,000万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 5: 事業計画・事業実績 (Q17-Q20) ===== -->
+      <div class="step-card" data-step="17" data-cat="5">
+        <div class="step-number">QUESTION 17</div>
+        <h2 class="step-question">サービス・プロダクトの現在の状況は？</h2>
+        <p class="step-supplement"></p>
+        <div class="options">
+          <button class="option-btn" data-value="revenue100" data-score="5"><span class="option-icon"></span>月商100万円以上の売上がある</button>
+          <button class="option-btn" data-value="revenue" data-score="4"><span class="option-icon"></span>売上が立っている（月商100万未満）</button>
+          <button class="option-btn" data-value="providing" data-score="3"><span class="option-icon"></span>顧客に提供中（売上はまだ）</button>
+          <button class="option-btn" data-value="ready" data-score="3"><span class="option-icon"></span>提供できる状態にある</button>
+          <button class="option-btn" data-value="soon" data-score="2"><span class="option-icon"></span>3ヶ月以内に提供予定</button>
+          <button class="option-btn" data-value="not_yet" data-score="1"><span class="option-icon"></span>まだ見込みがない</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="18" data-cat="5">
+        <div class="step-number">QUESTION 18</div>
+        <h2 class="step-question">設備資金の必要性はありますか？</h2>
+        <p class="step-supplement">店舗・工場・機材・Webサイト・業務システム等を含みます。</p>
+        <div class="options">
+          <button class="option-btn" data-value="none" data-score="3"><span class="option-icon"></span>設備資金は不要</button>
+          <button class="option-btn" data-value="under100" data-score="3"><span class="option-icon"></span>100万円未満</button>
+          <button class="option-btn" data-value="100-300" data-score="3"><span class="option-icon"></span>100〜300万円</button>
+          <button class="option-btn" data-value="300-500" data-score="3"><span class="option-icon"></span>300〜500万円</button>
+          <button class="option-btn" data-value="500-1000" data-score="2"><span class="option-icon"></span>500〜1,000万円</button>
+          <button class="option-btn" data-value="1000plus" data-score="2"><span class="option-icon"></span>1,000万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="19" data-cat="5">
+        <div class="step-number">QUESTION 19</div>
+        <h2 class="step-question">直近3ヶ月の平均月商をご選択ください。</h2>
+        <p class="step-supplement">これから起業される場合は、起業後3ヶ月の見込みをお選びください。</p>
+        <div class="options">
+          <button class="option-btn" data-value="0-10" data-score="1"><span class="option-icon"></span>0〜10万円</button>
+          <button class="option-btn" data-value="10-50" data-score="2"><span class="option-icon"></span>10〜50万円</button>
+          <button class="option-btn" data-value="50-100" data-score="3"><span class="option-icon"></span>50〜100万円</button>
+          <button class="option-btn" data-value="100-300" data-score="4"><span class="option-icon"></span>100〜300万円</button>
+          <button class="option-btn" data-value="300-500" data-score="4"><span class="option-icon"></span>300〜500万円</button>
+          <button class="option-btn" data-value="500plus" data-score="5"><span class="option-icon"></span>500万円以上</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>次へ進む</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-step="20" data-cat="5">
+        <div class="step-number">QUESTION 20</div>
+        <h2 class="step-question">事業計画書の準備状況は？</h2>
+        <p class="step-supplement">事業計画書は融資審査の核となる書類です。</p>
+        <div class="options">
+          <button class="option-btn" data-value="complete" data-score="5"><span class="option-icon"></span>数値計画含め作成済み</button>
+          <button class="option-btn" data-value="draft" data-score="3"><span class="option-icon"></span>ざっくり作成している</button>
+          <button class="option-btn" data-value="idea" data-score="2"><span class="option-icon"></span>アイデア段階</button>
+          <button class="option-btn" data-value="none" data-score="1"><span class="option-icon"></span>まだ何もない</button>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-back" onclick="goBack()">戻る</button>
+          <button class="btn btn-next" disabled>診断結果を見る</button>
+        </div>
+      </div>
+
+    </div><!-- /step-area -->
+
+    <!-- Result -->
+    <div class="result-section" id="resultSection">
+      <div class="result-card">
+        <div class="result-badge" id="resultBadge"></div>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-description" id="resultDescription"></p>
+
+        <div class="gauge-wrapper">
+          <svg viewBox="0 0 200 120" width="200" height="120">
+            <path d="M 20 100 A 80 80 0 0 1 180 100" class="gauge-bg" />
+            <path d="M 20 100 A 80 80 0 0 1 180 100" class="gauge-fill" id="gaugeFill"
+              stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+          </svg>
+          <div class="gauge-text">
+            <div class="gauge-score" id="gaugeScore">0</div>
+            <div class="gauge-unit">/ 100点</div>
+          </div>
+        </div>
+
+        <div class="result-details">
+          <div class="result-detail-item">
+            <div class="result-detail-label">融資可能性</div>
+            <div class="result-detail-value" id="resultProbability"></div>
+          </div>
+          <div class="result-detail-item">
+            <div class="result-detail-label">推定融資可能額</div>
+            <div class="result-detail-value" id="resultAmount"></div>
+          </div>
+          <div class="result-detail-item">
+            <div class="result-detail-label">おすすめ融資先</div>
+            <div class="result-detail-value" id="resultLender"></div>
+          </div>
+          <div class="result-detail-item">
+            <div class="result-detail-label">準備の充実度</div>
+            <div class="result-detail-value" id="resultPreparation"></div>
+          </div>
+        </div>
+
+        <!-- Category Scores -->
+        <div class="result-category-scores">
+          <h3>カテゴリ別スコア</h3>
+          <div class="cat-score-item">
+            <span class="cat-score-label">前提情報</span>
+            <div class="cat-score-bar-bg"><div class="cat-score-bar-fill" id="catBar1"></div></div>
+            <span class="cat-score-value" id="catVal1">0</span>
+          </div>
+          <div class="cat-score-item">
+            <span class="cat-score-label">既存借入</span>
+            <div class="cat-score-bar-bg"><div class="cat-score-bar-fill" id="catBar2"></div></div>
+            <span class="cat-score-value" id="catVal2">0</span>
+          </div>
+          <div class="cat-score-item">
+            <span class="cat-score-label">経験・信用</span>
+            <div class="cat-score-bar-bg"><div class="cat-score-bar-fill" id="catBar3"></div></div>
+            <span class="cat-score-value" id="catVal3">0</span>
+          </div>
+          <div class="cat-score-item">
+            <span class="cat-score-label">自己資金</span>
+            <div class="cat-score-bar-bg"><div class="cat-score-bar-fill" id="catBar4"></div></div>
+            <span class="cat-score-value" id="catVal4">0</span>
+          </div>
+          <div class="cat-score-item">
+            <span class="cat-score-label">事業計画</span>
+            <div class="cat-score-bar-bg"><div class="cat-score-bar-fill" id="catBar5"></div></div>
+            <span class="cat-score-value" id="catVal5">0</span>
+          </div>
+        </div>
+
+        <!-- Advice -->
+        <div class="result-advice">
+          <h3>診断からのアドバイス</h3>
+          <ul id="adviceList"></ul>
+        </div>
+
+        <!-- Lead Form -->
+        <div class="lead-form" id="leadForm">
+          <h3>無料相談を予約する</h3>
+          <p class="lead-desc">より正確な融資可能性の判定と、最適な融資戦略をご提案します。<br>以下にご入力いただくと、担当者よりご連絡いたします。</p>
+          <div class="form-group">
+            <label>会社名・屋号 <span class="required">必須</span></label>
+            <input type="text" id="leadCompany" placeholder="例）株式会社サンプル">
+          </div>
+          <div class="form-group">
+            <label>お名前 <span class="required">必須</span></label>
+            <input type="text" id="leadName" placeholder="例）山田太郎">
+          </div>
+          <div class="form-group">
+            <label>メールアドレス <span class="required">必須</span></label>
+            <input type="email" id="leadEmail" placeholder="例）sample@example.com">
+          </div>
+          <div class="form-group">
+            <label>電話番号 <span class="required">必須</span></label>
+            <input type="tel" id="leadPhone" placeholder="例）09012345678">
+          </div>
+          <button class="btn-cta" id="submitLead">無料相談を予約する</button>
+          <div class="cta-note">相談は完全無料です。お気軽にお問い合わせください。</div>
+          <div style="text-align:center;">
+            <button class="btn-retry" onclick="resetDiagnosis()">もう一度診断する</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+  <!-- Trust -->
+  <section class="trust-section">
+    <div class="container">
+      <div class="trust-items">
+        <div class="trust-item">
+          <div class="trust-number">100件<small>+</small></div>
+          <div class="trust-label">融資支援実績</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-number">87%</div>
+          <div class="trust-label">融資成功率</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-number">無料</div>
+          <div class="trust-label">初回相談</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p><a href="https://hatenabase.jp/">はてなベース株式会社</a> &copy; 2026 All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // ===== Config =====
+    const TOTAL = 20;
+    const CATEGORIES = {
+      1: { name: '前提情報', steps: [1,2,3,4,5], maxScore: 18 },
+      2: { name: '既存借入', steps: [6,7], maxScore: 9 },
+      3: { name: '経験・信用', steps: [8,9,10,11,12,13], maxScore: 25 },
+      4: { name: '自己資金', steps: [14,15,16], maxScore: 15 },
+      5: { name: '事業計画', steps: [17,18,19,20], maxScore: 16 }
+    };
+
+    // Weighted importance per category (must sum to 1)
+    const WEIGHTS = { 1: 0.10, 2: 0.15, 3: 0.30, 4: 0.25, 5: 0.20 };
+
+    // ===== State =====
+    let currentStep = 1;
+    const answers = {};
+
+    // ===== DOM =====
+    const stepCards = document.querySelectorAll('.step-card');
+    const progressFill = document.getElementById('progressFill');
+    const progressCount = document.getElementById('progressCount');
+    const progressLabel = document.getElementById('progressLabel');
+    const categoryNav = document.getElementById('categoryNav');
+    const stepArea = document.getElementById('stepArea');
+    const progressSection = document.getElementById('progressSection');
+    const resultSection = document.getElementById('resultSection');
+
+    // ===== Select handling =====
+    document.getElementById('prefSelect').addEventListener('change', function() {
+      const card = this.closest('.step-card');
+      const step = parseInt(card.dataset.step);
+      if (this.value) {
+        answers[step] = { value: this.value, score: parseInt(this.dataset.score) };
+        card.querySelector('.btn-next').disabled = false;
+      } else {
+        delete answers[step];
+        card.querySelector('.btn-next').disabled = true;
+      }
+    });
+
+    // ===== Radio options =====
+    document.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const card = this.closest('.step-card');
+        card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+        const step = parseInt(card.dataset.step);
+        answers[step] = { value: this.dataset.value, score: parseInt(this.dataset.score) };
+        card.querySelector('.btn-next').disabled = false;
+      });
+    });
+
+    // ===== Next buttons =====
+    document.querySelectorAll('.btn-next').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (this.disabled) return;
+        if (currentStep < TOTAL) {
+          currentStep++;
+          showStep(currentStep);
+        } else {
+          showResult();
+        }
+      });
+    });
+
+    // ===== Navigation =====
+    function showStep(step) {
+      stepCards.forEach(card => {
+        card.classList.remove('active');
+        if (parseInt(card.dataset.step) === step) card.classList.add('active');
+      });
+      updateProgress(step);
+      updateCategoryNav(step);
+      window.scrollTo({ top: categoryNav.offsetTop - 70, behavior: 'smooth' });
+    }
+
+    function goBack() {
+      if (currentStep > 1) { currentStep--; showStep(currentStep); }
+    }
+
+    function updateProgress(step) {
+      progressFill.style.width = (step / TOTAL * 100) + '%';
+      progressCount.textContent = step + ' / ' + TOTAL;
+      const card = document.querySelector(`.step-card[data-step="${step}"]`);
+      const catId = parseInt(card.dataset.cat);
+      progressLabel.textContent = 'STEP ' + catId + ' / ' + CATEGORIES[catId].name;
+    }
+
+    function updateCategoryNav(step) {
+      const card = document.querySelector(`.step-card[data-step="${step}"]`);
+      const activeCat = parseInt(card.dataset.cat);
+      document.querySelectorAll('.category-item').forEach(item => {
+        const cat = parseInt(item.dataset.cat);
+        item.classList.remove('active', 'done');
+        if (cat === activeCat) item.classList.add('active');
+        else if (cat < activeCat) item.classList.add('done');
+      });
+    }
+
+    // ===== Scoring =====
+    function calcCategoryScores() {
+      const scores = {};
+      for (const [catId, cat] of Object.entries(CATEGORIES)) {
+        let total = 0;
+        cat.steps.forEach(s => { if (answers[s]) total += answers[s].score; });
+        scores[catId] = { raw: total, max: cat.maxScore, pct: Math.round(total / cat.maxScore * 100) };
+      }
+      return scores;
+    }
+
+    function calcWeightedScore(catScores) {
+      let weighted = 0;
+      for (const [catId, w] of Object.entries(WEIGHTS)) {
+        weighted += (catScores[catId]?.pct || 0) * w;
+      }
+      return Math.round(weighted);
+    }
+
+    // ===== Result =====
+    function showResult() {
+      const catScores = calcCategoryScores();
+      const score = calcWeightedScore(catScores);
+
+      stepArea.style.display = 'none';
+      progressSection.style.display = 'none';
+      categoryNav.style.display = 'none';
+      resultSection.classList.add('active');
+
+      // Level
+      let level, probability, title, description;
+      if (score >= 70) {
+        level = 'high'; probability = '高い';
+        title = '融資を受けられる可能性が高いです';
+        description = '現在の状況は融資審査において良好な条件が揃っています。適切な準備を進めることで、希望に近い融資を受けられる見込みがあります。';
+      } else if (score >= 40) {
+        level = 'medium'; probability = '条件付きで可能';
+        title = '準備次第で融資の可能性があります';
+        description = 'いくつかの課題はありますが、事前の準備や専門家のサポートにより融資の可能性を高めることができます。';
+      } else {
+        level = 'low'; probability = '要相談';
+        title = '融資に向けて準備が必要です';
+        description = '現時点では課題がありますが、適切な対策を講じることで融資の道が開ける可能性があります。まずは専門家にご相談ください。';
+      }
+
+      // Amount estimation
+      const fundScores = [answers[14]?.score||1, answers[15]?.score||1, answers[16]?.score||1];
+      const avgFund = fundScores.reduce((a,b)=>a+b,0) / 3;
+      const fundMap = {1:80, 2:200, 3:400, 4:750, 5:1200};
+      const baseFund = fundMap[Math.round(avgFund)] || 200;
+      let amount;
+      if (score >= 70) amount = Math.min(baseFund * 3, 5000);
+      else if (score >= 40) amount = Math.min(baseFund * 2, 3000);
+      else amount = Math.min(baseFund * 1.2, 1500);
+      amount = Math.round(amount / 50) * 50;
+
+      // Lender
+      const stage = answers[3]?.value;
+      let lender;
+      if (stage === 'future' || stage === '1year' || stage === 'sole_started' || stage === 'corp_1st') {
+        lender = score >= 65 ? '日本政策金融公庫' : '日本政策金融公庫';
+      } else {
+        lender = score >= 65 ? '公庫 + 民間銀行' : '日本政策金融公庫';
+      }
+
+      // Preparation
+      const prepScore = (catScores[5]?.pct || 0);
+      let preparation;
+      if (prepScore >= 70) preparation = '充実している';
+      else if (prepScore >= 40) preparation = 'あと少し';
+      else preparation = '準備が必要';
+
+      // Badge
+      const badge = document.getElementById('resultBadge');
+      badge.className = 'result-badge ' + level;
+      badge.textContent = level === 'high' ? '融資可能性：高' : level === 'medium' ? '融資可能性：中' : '融資可能性：要相談';
+
+      document.getElementById('resultTitle').textContent = title;
+      document.getElementById('resultDescription').textContent = description;
+      document.getElementById('resultProbability').textContent = probability;
+      document.getElementById('resultAmount').innerHTML = amount + '万円 <small>程度</small>';
+      document.getElementById('resultLender').textContent = lender;
+      document.getElementById('resultPreparation').textContent = preparation;
+
+      // Gauge
+      const gaugeEl = document.getElementById('gaugeFill');
+      const scoreEl = document.getElementById('gaugeScore');
+      const maxDash = 251.2;
+      let gaugeColor = score >= 70 ? '#2E8B57' : score >= 40 ? '#D4880F' : '#C0392B';
+      setTimeout(() => {
+        gaugeEl.style.stroke = gaugeColor;
+        gaugeEl.style.strokeDashoffset = maxDash - (maxDash * score / 100);
+        let cur = 0;
+        const inc = score / (1200 / 16);
+        const timer = setInterval(() => {
+          cur += inc;
+          if (cur >= score) { cur = score; clearInterval(timer); }
+          scoreEl.textContent = Math.round(cur);
+        }, 16);
+      }, 200);
+
+      // Category bars
+      setTimeout(() => {
+        for (let i = 1; i <= 5; i++) {
+          const pct = catScores[i]?.pct || 0;
+          const bar = document.getElementById('catBar' + i);
+          const val = document.getElementById('catVal' + i);
+          bar.style.width = pct + '%';
+          bar.style.background = pct >= 70 ? '#2E8B57' : pct >= 40 ? '#D4880F' : '#C0392B';
+          val.textContent = pct;
+        }
+      }, 300);
+
+      // Advice
+      const advice = [];
+      if (catScores[3]?.pct < 50) {
+        if ((answers[8]?.score||0) <= 1) advice.push('業界経験が浅い場合、これまでの経験をどう事業に活かすかを具体的に説明できるよう準備しましょう。');
+        if ((answers[9]?.score||0) <= 2) advice.push('関連する経験年数が短い場合でも、具体的な実績やスキルを整理することで補えます。');
+        if ((answers[12]?.score||0) <= 1) advice.push('信用情報に不安がある場合は、CIC等で事前に確認することをおすすめします。');
+        if ((answers[13]?.score||0) === 0) advice.push('税金の未納がある場合、融資審査に大きく影響します。早急に納付を完了させましょう。');
+      }
+      if (catScores[4]?.pct < 50) {
+        advice.push('自己資金を増やすことで融資可能性が大幅に向上します。希望融資額の3分の1以上が目安です。');
+      }
+      if (catScores[2]?.pct < 50) {
+        if ((answers[7]?.score||0) <= 2) advice.push('過去の否決経験がある場合、否決理由を分析し対策を講じた上で再申請することが重要です。');
+      }
+      if (catScores[5]?.pct < 50) {
+        if ((answers[20]?.score||0) <= 2) advice.push('事業計画書の完成度を高めることが融資成功の鍵です。収支予測と資金使途を具体的に記載しましょう。');
+        if ((answers[17]?.score||0) <= 2) advice.push('サービス・プロダクトの具体性を高め、収益の見通しを明確にすることが重要です。');
+      }
+      if (stage === 'future' || stage === '1year') {
+        advice.push('創業前の方は「新創業融資制度」の活用を検討しましょう。無担保・無保証人で利用可能です。');
+      }
+      if (advice.length === 0) {
+        advice.push('良好な条件が揃っています。専門家と一緒に申請書類を仕上げることで、さらに融資成功率を高められます。');
+      }
+
+      const adviceList = document.getElementById('adviceList');
+      adviceList.innerHTML = '';
+      advice.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        adviceList.appendChild(li);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== Lead Submit =====
+    document.getElementById('submitLead').addEventListener('click', function() {
+      const company = document.getElementById('leadCompany').value.trim();
+      const name = document.getElementById('leadName').value.trim();
+      const email = document.getElementById('leadEmail').value.trim();
+      const phone = document.getElementById('leadPhone').value.trim();
+
+      if (!company || !name || !email || !phone) {
+        alert('すべての項目をご入力ください。');
+        return;
+      }
+
+      // In production: send to API / Google Forms / CF7 endpoint
+      // For now, redirect to contact page
+      const params = new URLSearchParams({
+        company, name, email, phone,
+        score: document.getElementById('gaugeScore').textContent,
+        source: 'loan-diagnosis'
+      });
+      window.location.href = 'https://hatenabase.jp/contact/?' + params.toString();
+    });
+
+    // ===== Reset =====
+    function resetDiagnosis() {
+      currentStep = 1;
+      Object.keys(answers).forEach(k => delete answers[k]);
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+      document.getElementById('prefSelect').value = '';
+      resultSection.classList.remove('active');
+      stepArea.style.display = '';
+      progressSection.style.display = '';
+      categoryNav.style.display = '';
+      showStep(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== Init =====
+    updateProgress(1);
+    updateCategoryNav(1);
+  </script>
+
+</body>
+</html>
