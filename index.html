@@ -58,18 +58,15 @@
       justify-content: space-between;
     }
     .logo {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
       text-decoration: none;
-      letter-spacing: 0.02em;
     }
     .logo span {
       font-weight: 400;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-sub);
-      display: block;
-      margin-top: 2px;
     }
     .header-cta {
       font-size: 13px;
@@ -516,8 +513,8 @@
   <header class="header">
     <div class="header-inner">
       <a href="https://hatenabase.jp/" class="logo">
-        はてなベース株式会社
-        <span>融資診断サービス</span>
+        <img src="images/logo.png" alt="はてなベース株式会社" style="height:30px;width:auto;">
+        <span>融資診断</span>
       </a>
       <a href="https://hatenabase.jp/contact/" class="header-cta">無料相談はこちら</a>
     </div>

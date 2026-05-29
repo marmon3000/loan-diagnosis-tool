@@ -45,16 +45,16 @@ body {
   justify-content: space-between;
 }
 .logo {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
 }
+.logo img { height: 30px; width: auto; }
 .logo span {
   font-weight: 400;
   font-size: 11px;
   color: var(--text-sub);
-  display: block;
 }
 .header-nav {
   display: flex;

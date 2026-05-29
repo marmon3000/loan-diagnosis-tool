@@ -60,12 +60,13 @@
       justify-content: space-between;
     }
     .logo {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
       text-decoration: none;
     }
-    .logo span { font-weight: 400; font-size: 11px; color: var(--text-sub); display: block; }
+    .logo img { height: 32px; width: auto; }
+    .logo span { font-weight: 400; font-size: 11px; color: var(--text-sub); }
     .header-right { display: flex; align-items: center; gap: 8px; }
     .header-nav {
       display: flex;
@@ -616,8 +617,8 @@
   <header class="header">
     <div class="header-inner">
       <a href="https://hatenabase.jp/" class="logo">
-        はてなベース株式会社
-        <span>創業融資支援サービス</span>
+        <img src="images/logo.png" alt="はてなベース株式会社">
+        <span>創業融資支援</span>
       </a>
       <div class="header-right">
         <nav class="header-nav">
