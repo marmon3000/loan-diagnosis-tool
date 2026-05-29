@@ -66,7 +66,20 @@
       text-decoration: none;
     }
     .logo span { font-weight: 400; font-size: 11px; color: var(--text-sub); display: block; }
-    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .header-nav a {
+      font-size: 13px;
+      color: var(--text-sub);
+      text-decoration: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .header-nav a:hover { color: var(--primary); }
     .header-tel {
       font-size: 13px;
       color: var(--text-sub);
@@ -373,6 +386,17 @@
       font-weight: 500;
       color: var(--success);
     }
+    .case-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .case-link:hover { text-decoration: underline; }
+    .case-link::after { content: ' →'; }
 
     /* ===== CTA Band ===== */
     .cta-band {
@@ -558,6 +582,9 @@
       .company-info { flex-direction: column; }
       .contact-card { padding: 32px 20px; }
       .header-tel { display: none; }
+      .header-nav { gap: 12px; }
+      .header-nav a { font-size: 11px; }
+      .header-nav .hide-sp { display: none; }
     }
   </style>
 </head>
@@ -571,6 +598,12 @@
         <span>創業融資支援サービス</span>
       </a>
       <div class="header-right">
+        <nav class="header-nav">
+          <a href="#cases">成功事例</a>
+          <a href="https://hatenabase.jp/blog/" target="_blank" class="hide-sp">融資コラム</a>
+          <a href="https://hatenabase.jp/service/" target="_blank" class="hide-sp">会計サービス</a>
+          <a href="index.html">融資診断</a>
+        </nav>
         <a href="tel:0368242900" class="header-tel"><strong>03-6824-2900</strong></a>
         <a href="#contact" class="header-cta">無料相談を予約</a>
       </div>
@@ -724,7 +757,7 @@
   </section>
 
   <!-- Cases -->
-  <section class="section section-alt">
+  <section class="section section-alt" id="cases">
     <div class="container">
       <div class="section-title">
         <span class="en">CASES</span>
@@ -747,6 +780,7 @@
             <h3>FC加盟で複数事業を展開。清掃事業の実績を武器に創業融資を獲得</h3>
             <p>法人設立直後に2つのFC事業を立ち上げ。自己資金500万円と清掃事業での稼働実績をベースに、説得力のある事業計画書を作成。段階的な事業展開戦略が評価され、希望額満額の融資を実現しました。</p>
             <div class="case-result">融資実行期間：約1ヶ月</div>
+            <a href="cases/fc-multi-business.html" class="case-link">詳しく見る</a>
           </div>
         </div>
 
@@ -764,6 +798,7 @@
             <h3>VC出資実績を活かし、公庫と民間銀行の二行体制で資金調達</h3>
             <p>AI知育デバイスを開発するスタートアップ。著名VCからの出資実績と、1期目の黒字経営を強みに、公庫・民間銀行の両方から融資を獲得。面談想定質問の準備と、製品の市場機会を明確にした計画書が決め手でした。</p>
             <div class="case-result">エクイティ + デット調達を同時に設計</div>
+            <a href="cases/startup-ai-dual-funding.html" class="case-link">詳しく見る</a>
           </div>
         </div>
 
@@ -781,6 +816,7 @@
             <h3>売上8倍成長の実績を武器に、M&A買収資金の段階的調達を設計</h3>
             <p>営業代行事業で前期比8倍の売上成長を実現した企業。新規事業のM&A買収に必要な資金を、公庫・信用金庫を組み合わせた段階的な調達プランで設計。高い営業利益率（48%）と成長実績が金融機関からの信頼を獲得しました。</p>
             <div class="case-result">公庫 + 信金の段階的調達プランを構築</div>
+            <a href="cases/growth-company-ma-funding.html" class="case-link">詳しく見る</a>
           </div>
         </div>
 
